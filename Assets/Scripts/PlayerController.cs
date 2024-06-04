@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     private float moveHoriz;
     private float moveVert;
     public GameObject player;
-    
+
     void Start()
     {
         Time.timeScale = 1f;
@@ -34,10 +34,7 @@ public class PlayerController : MonoBehaviour
 
     // private void OnTriggerEnter(Collider other)
     // {
-    //     if (other.CompareTag(""))
-    //     {
-    //         
-    //     }
+    //     
     // }
     //
     // private void OnCollisionEnter(Collision collision)
