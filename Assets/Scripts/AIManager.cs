@@ -18,14 +18,22 @@ public class AIManager : MonoBehaviour
     public Transform target5;
     public int customersActivated;
 
+    public float nextCustomerTimer;
+
     void Start()
     {
         agent1.SetDestination(target1.transform.position);
+        nextCustomerTimer = 5;
     }
     
     void Update()
     {
-        
+        nextCustomerTimer -= Time.deltaTime;
+        if (nextCustomerTimer <= 0)
+        {
+            StartNextCustomer();
+            nextCustomerTimer = 5;
+        }
     }
 
     public void StartNextCustomer()

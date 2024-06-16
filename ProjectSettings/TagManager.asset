@@ -6,6 +6,8 @@ TagManager:
   tags:
   - PlateDispenser
   - Plate
+  - BurgerCustomer
+  - PlainBurgerCustomer
   layers:
   - Default
   - TransparentFX
