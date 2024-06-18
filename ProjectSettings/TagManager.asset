@@ -9,6 +9,12 @@ TagManager:
   - BurgerCustomer
   - PlainBurgerCustomer
   - Table
+  - CustomerTable
+  - Bin
+  - TomatoDispenser
+  - BunDispenser
+  - LettuceDispenser
+  - PattyDispenser
   layers:
   - Default
   - TransparentFX
