@@ -14,6 +14,8 @@ public class TableManager : MonoBehaviour
     public GameObject customer3;
     public GameObject customer4;
     public GameObject customer5;
+    public bool orderCompleted;
+    public int ordersCompleted;
 
     public NavMeshAgent agent1;
     public NavMeshAgent agent2;
@@ -26,9 +28,16 @@ public class TableManager : MonoBehaviour
     public Transform target4;
     public Transform target5;
     public Transform endTarget;
+    public GameObject table1UI;
+    public GameObject table2UI;
+    public GameObject table3UI;
+    public GameObject table4UI;
+    public GameObject table5UI;
+    
 
     void Start()
     {
+        orderCompleted = false;
     }
     
     void Update()
@@ -44,19 +53,37 @@ public class TableManager : MonoBehaviour
         {
             Debug.Log("burgerCustomer collided");
             this.currentOrder = "burgerCustomer";
-            StartCoroutine(WaitTimer());
+            
 
             Debug.Log("Finishedwaiting");
             if (AIManager.customersSentOut == 0)
             {
+                StartCoroutine(WaitTimer1());
+                if (orderCompleted)
+                {
+                    ordersCompleted++;
+                }
+                orderCompleted = false;
                 SendOutside();
             }
             else if (AIManager.customersSentOut == 2)
             {
+                StartCoroutine(WaitTimer3());
+                if (orderCompleted)
+                {
+                    ordersCompleted++;
+                }
+                orderCompleted = false;
                 SendOutside();
             }
             else if (AIManager.customersSentOut == 4)
             {
+                StartCoroutine(WaitTimer5());
+                if (orderCompleted)
+                {
+                    ordersCompleted++;
+                }
+                orderCompleted = false;
                 SendOutside();
             }
         }
@@ -65,14 +92,26 @@ public class TableManager : MonoBehaviour
         {
             Debug.Log("plain customer collided");
             this.currentOrder = "plainBurgerCustomer";
-            StartCoroutine(WaitTimer());
 
             if (AIManager.customersSentOut == 1)
             {
+                StartCoroutine(WaitTimer2());
+                if (orderCompleted)
+                {
+                    ordersCompleted++;
+                }
+                orderCompleted = false;
                 SendOutside();
             }
             else if (AIManager.customersSentOut == 3)
             {
+                StartCoroutine(WaitTimer4());
+                if (orderCompleted)
+                {
+                    ordersCompleted++;
+                }
+
+                orderCompleted = false;
                 SendOutside();
             }
         }
@@ -124,10 +163,38 @@ public class TableManager : MonoBehaviour
     //     yield return new WaitForSeconds(5);
     // }
 
-    public IEnumerator WaitTimer()
+    public IEnumerator WaitTimer1()
     {
-        yield return new WaitForSeconds(5);
+        table1UI.SetActive(true);
+        yield return new WaitForSeconds(45);
+        table1UI.SetActive(false);
+        
     }
+    public IEnumerator WaitTimer2()
+    {
+        table2UI.SetActive(true);
+        yield return new WaitForSeconds(45);
+        table2UI.SetActive(false);
+    }
+    public IEnumerator WaitTimer3()
+    {
+        table3UI.SetActive(true);
+        yield return new WaitForSeconds(45);
+        table3UI.SetActive(false);
+    }
+    public IEnumerator WaitTimer4()
+    {
+        table4UI.SetActive(true);
+        yield return new WaitForSeconds(45);
+        table4UI.SetActive(false);
+    }
+    public IEnumerator WaitTimer5()
+    {
+        table5UI.SetActive(true);
+        yield return new WaitForSeconds(45);
+        table5UI.SetActive(false);
+    }
+    
 
     // OnTriggerEnter
     // {
