@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class AIManager : MonoBehaviour
 {
-    public GameObject[] customers;
     public NavMeshAgent agent1;
     public NavMeshAgent agent2;
     public NavMeshAgent agent3;
@@ -16,14 +15,17 @@ public class AIManager : MonoBehaviour
     public Transform target3;
     public Transform target4;
     public Transform target5;
+    public Transform endTarget;
     public int customersActivated;
+    
+    public static int customersSentOut;
 
     public float nextCustomerTimer;
 
     void Start()
     {
         agent1.SetDestination(target1.transform.position);
-        nextCustomerTimer = 5;
+        nextCustomerTimer = 30;
     }
     
     void Update()
@@ -32,7 +34,7 @@ public class AIManager : MonoBehaviour
         if (nextCustomerTimer <= 0)
         {
             StartNextCustomer();
-            nextCustomerTimer = 5;
+            nextCustomerTimer = 30;
         }
     }
 
