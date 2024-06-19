@@ -18,9 +18,9 @@ public class PlateManager : MonoBehaviour
     public GameObject patty;
     public GameObject tomato;
 
-    public bool hasMadePlainBurger;
-    public bool hasMadeFilledBurger;
-    public bool hasMadeTrash;
+    public static bool hasMadePlainBurger;
+    public static bool hasMadeFilledBurger;
+    public static bool hasMadeTrash;
 
     private void Start()
     {
@@ -88,13 +88,14 @@ public class PlateManager : MonoBehaviour
                     lettuce.SetActive(false);
                     patty.SetActive(false);
                     tomato.SetActive(false);
+                    plate.SetActive(false);
                 }
             }
         }
 
     }
 
-    private void OnCollisionEnter(Collision collision)
+    /*private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag("Table"))
         {
@@ -111,7 +112,7 @@ public class PlateManager : MonoBehaviour
                 Debug.Log("customer not satisfied");
             }
         }
-    }
+    }*/
 
     public void CheckBurger()
     {

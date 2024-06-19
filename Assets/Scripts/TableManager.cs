@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class TableManager : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class TableManager : MonoBehaviour
     public GameObject customer5;
     public bool orderCompleted;
     public int ordersCompleted;
+    public float orderTimeRemaining;
 
     public NavMeshAgent agent1;
     public NavMeshAgent agent2;
@@ -28,11 +30,16 @@ public class TableManager : MonoBehaviour
     public Transform target4;
     public Transform target5;
     public Transform endTarget;
-    public GameObject table1UI;
-    public GameObject table2UI;
-    public GameObject table3UI;
-    public GameObject table4UI;
-    public GameObject table5UI;
+    public GameObject tableUI;
+    public Slider timerSlider;
+    
+    public GameObject bunBottom;
+    public GameObject bunTop;
+    public GameObject lettuce;
+    public GameObject patty;
+    public GameObject tomato;
+    public GameObject plate;
+    
     
 
     void Start()
@@ -42,6 +49,15 @@ public class TableManager : MonoBehaviour
     
     void Update()
     {
+        orderTimeRemaining -= Time.deltaTime;
+        if (orderTimeRemaining > 0)
+        {
+            timerSlider.value = orderTimeRemaining / 45f;
+        }
+        else if (orderTimeRemaining < 0)
+        {
+            tableUI.SetActive(false);
+        }
 
     }
 
@@ -49,8 +65,10 @@ public class TableManager : MonoBehaviour
     {
         //StartCoroutine(CheckTimer());
         
+        
         if (other.CompareTag("BurgerCustomer"))
         {
+            orderTimeRemaining = 45f;
             Debug.Log("burgerCustomer collided");
             this.currentOrder = "burgerCustomer";
             
@@ -58,31 +76,20 @@ public class TableManager : MonoBehaviour
             Debug.Log("Finishedwaiting");
             if (AIManager.customersSentOut == 0)
             {
+                
                 StartCoroutine(WaitTimer1());
-                if (orderCompleted)
-                {
-                    ordersCompleted++;
-                }
                 orderCompleted = false;
                 SendOutside();
             }
             else if (AIManager.customersSentOut == 2)
             {
                 StartCoroutine(WaitTimer3());
-                if (orderCompleted)
-                {
-                    ordersCompleted++;
-                }
                 orderCompleted = false;
                 SendOutside();
             }
             else if (AIManager.customersSentOut == 4)
             {
                 StartCoroutine(WaitTimer5());
-                if (orderCompleted)
-                {
-                    ordersCompleted++;
-                }
                 orderCompleted = false;
                 SendOutside();
             }
@@ -90,33 +97,65 @@ public class TableManager : MonoBehaviour
 
         if (other.CompareTag("PlainBurgerCustomer"))
         {
+            orderTimeRemaining = 45f;
             Debug.Log("plain customer collided");
             this.currentOrder = "plainBurgerCustomer";
 
             if (AIManager.customersSentOut == 1)
             {
                 StartCoroutine(WaitTimer2());
-                if (orderCompleted)
-                {
-                    ordersCompleted++;
-                }
                 orderCompleted = false;
                 SendOutside();
             }
             else if (AIManager.customersSentOut == 3)
             {
                 StartCoroutine(WaitTimer4());
-                if (orderCompleted)
-                {
-                    ordersCompleted++;
-                }
-
                 orderCompleted = false;
                 SendOutside();
             }
         }
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Player"))
+        {
+            if (this.currentOrder == "burgerCustomer" && PlateManager.hasMadeFilledBurger)
+            {
+                orderCompleted = true;
+                ordersCompleted++;
+                tableUI.SetActive(false);
+                DeactivateBurger();
+                SendOutside();
+                Debug.Log("Burger customer satisfied");
+            }
+            else if (this.currentOrder == "plainBurgerCustomer" && PlateManager.hasMadeFilledBurger)
+            {
+                orderCompleted = true;
+                ordersCompleted++;
+                tableUI.SetActive(false);
+                DeactivateBurger();
+                SendOutside();
+                Debug.Log("Plain burger customer satisfied");
+            }
+            else
+            {
+                Debug.Log("customer not satisfied");
+            }
+        }
+    }
 
+    public void DeactivateBurger()
+    {
+        bunBottom.SetActive(false);
+        bunTop.SetActive(false);
+        lettuce.SetActive(false);
+        patty.SetActive(false);
+        tomato.SetActive(false);
+        
+        PlateManager.hasMadeTrash = true;
+        PlateManager.hasMadePlainBurger = false;
+        PlateManager.hasMadeFilledBurger = false;
+    }
     public void CheckCustomer()
     {
         
@@ -165,34 +204,34 @@ public class TableManager : MonoBehaviour
 
     public IEnumerator WaitTimer1()
     {
-        table1UI.SetActive(true);
+        tableUI.SetActive(true);
         yield return new WaitForSeconds(45);
-        table1UI.SetActive(false);
+        tableUI.SetActive(false);
         
     }
     public IEnumerator WaitTimer2()
     {
-        table2UI.SetActive(true);
+        tableUI.SetActive(true);
         yield return new WaitForSeconds(45);
-        table2UI.SetActive(false);
+        tableUI.SetActive(false);
     }
     public IEnumerator WaitTimer3()
     {
-        table3UI.SetActive(true);
+        tableUI.SetActive(true);
         yield return new WaitForSeconds(45);
-        table3UI.SetActive(false);
+        tableUI.SetActive(false);
     }
     public IEnumerator WaitTimer4()
     {
-        table4UI.SetActive(true);
+        tableUI.SetActive(true);
         yield return new WaitForSeconds(45);
-        table4UI.SetActive(false);
+        tableUI.SetActive(false);
     }
     public IEnumerator WaitTimer5()
     {
-        table5UI.SetActive(true);
+        tableUI.SetActive(true);
         yield return new WaitForSeconds(45);
-        table5UI.SetActive(false);
+        tableUI.SetActive(false);
     }
     
 
