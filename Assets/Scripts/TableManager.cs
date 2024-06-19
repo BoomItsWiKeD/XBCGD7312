@@ -76,22 +76,15 @@ public class TableManager : MonoBehaviour
             Debug.Log("Finishedwaiting");
             if (AIManager.customersSentOut == 0)
             {
-                
                 StartCoroutine(WaitTimer1());
-                orderCompleted = false;
-                SendOutside();
             }
             else if (AIManager.customersSentOut == 2)
             {
                 StartCoroutine(WaitTimer3());
-                orderCompleted = false;
-                SendOutside();
             }
             else if (AIManager.customersSentOut == 4)
             {
                 StartCoroutine(WaitTimer5());
-                orderCompleted = false;
-                SendOutside();
             }
         }
 
@@ -104,14 +97,10 @@ public class TableManager : MonoBehaviour
             if (AIManager.customersSentOut == 1)
             {
                 StartCoroutine(WaitTimer2());
-                orderCompleted = false;
-                SendOutside();
             }
             else if (AIManager.customersSentOut == 3)
             {
                 StartCoroutine(WaitTimer4());
-                orderCompleted = false;
-                SendOutside();
             }
         }
     }
@@ -208,30 +197,44 @@ public class TableManager : MonoBehaviour
         yield return new WaitForSeconds(45);
         tableUI.SetActive(false);
         
+        orderCompleted = false;
+        SendOutside();
     }
     public IEnumerator WaitTimer2()
     {
         tableUI.SetActive(true);
         yield return new WaitForSeconds(45);
         tableUI.SetActive(false);
+        
+        orderCompleted = false;
+        SendOutside();
     }
     public IEnumerator WaitTimer3()
     {
         tableUI.SetActive(true);
         yield return new WaitForSeconds(45);
         tableUI.SetActive(false);
+        
+        orderCompleted = false;
+        SendOutside();
     }
     public IEnumerator WaitTimer4()
     {
         tableUI.SetActive(true);
         yield return new WaitForSeconds(45);
         tableUI.SetActive(false);
+        
+        orderCompleted = false;
+        SendOutside();
     }
     public IEnumerator WaitTimer5()
     {
         tableUI.SetActive(true);
         yield return new WaitForSeconds(45);
         tableUI.SetActive(false);
+        
+        orderCompleted = false;
+        SendOutside();
     }
     
 
