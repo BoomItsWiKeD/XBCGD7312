@@ -40,7 +40,11 @@ public class TableManager : MonoBehaviour
     public GameObject tomato;
     public GameObject plate;
     
-    
+    public GameObject bunBottomImg;
+    public GameObject bunTopImg;
+    public GameObject lettuceImg;
+    public GameObject tomatoImg;
+    public GameObject pattyImg;
 
     void Start()
     {
@@ -110,6 +114,7 @@ public class TableManager : MonoBehaviour
         {
             if (this.currentOrder == "burgerCustomer" && PlateManager.hasMadeFilledBurger)
             {
+                PlateManager.hasMadeFilledBurger = false;
                 orderCompleted = true;
                 ordersCompleted++;
                 tableUI.SetActive(false);
@@ -117,8 +122,9 @@ public class TableManager : MonoBehaviour
                 SendOutside();
                 Debug.Log("Burger customer satisfied");
             }
-            else if (this.currentOrder == "plainBurgerCustomer" && PlateManager.hasMadeFilledBurger)
+            else if (this.currentOrder == "plainBurgerCustomer" && PlateManager.hasMadePlainBurger)
             {
+                PlateManager.hasMadePlainBurger = false;
                 orderCompleted = true;
                 ordersCompleted++;
                 tableUI.SetActive(false);
@@ -128,6 +134,7 @@ public class TableManager : MonoBehaviour
             }
             else
             {
+                PlateManager.hasMadeTrash = true;
                 Debug.Log("customer not satisfied");
             }
         }
@@ -140,6 +147,12 @@ public class TableManager : MonoBehaviour
         lettuce.SetActive(false);
         patty.SetActive(false);
         tomato.SetActive(false);
+        
+        bunBottomImg.SetActive(false);
+        bunTopImg.SetActive(false);
+        lettuceImg.SetActive(false);
+        tomatoImg.SetActive(false);
+        pattyImg.SetActive(false);
         
         PlateManager.hasMadeTrash = true;
         PlateManager.hasMadePlainBurger = false;
