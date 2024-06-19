@@ -95,24 +95,41 @@ public class PlateManager : MonoBehaviour
 
     }
 
-    /*private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag("Table"))
         {
             if (collision.collider.GetComponent<TableManager>().currentOrder == "burgerCustomer" && hasMadeFilledBurger)
             {
                 Debug.Log("Burger customer satisfied");
+                collision.collider.GetComponent<TableManager>().orderCompleted = true;
+                collision.collider.GetComponent<TableManager>().SendOutside();
+                collision.collider.GetComponent<TableManager>().tableUI.SetActive(false);
+                
+                bunBottom.SetActive(false);
+                bunTop.SetActive(false);
+                lettuce.SetActive(false);
+                tomato.SetActive(false);
+                patty.SetActive(false);
             }
             else if (collision.collider.GetComponent<TableManager>().currentOrder == "plainBurgerCustomer" && hasMadePlainBurger)
             {
                 Debug.Log("Plain burger customer satisfied");
+                collision.collider.GetComponent<TableManager>().orderCompleted = true;
+                collision.collider.GetComponent<TableManager>().SendOutside();
+                collision.collider.GetComponent<TableManager>().tableUI.SetActive(false);
+                
+                bunBottom.SetActive(false);
+                bunTop.SetActive(false);
+                patty.SetActive(false);
             }
             else
             {
                 Debug.Log("customer not satisfied");
+                collision.collider.GetComponent<TableManager>().orderCompleted = false;
             }
         }
-    }*/
+    }
 
     public void CheckBurger()
     {
