@@ -58,56 +58,46 @@ public class TableManager : MonoBehaviour
         {
             timerSlider.value = orderTimeRemaining / 45f;
         }
-        else if (orderTimeRemaining < 0)
+        else if (orderTimeRemaining <= 0)
         {
             tableUI.SetActive(false);
+            Invoke("SendCustomerOutside", 1f);
         }
 
     }
 
+    private void CancelOrder()
+    {
+        tableUI.SetActive(false);
+        SendCustomerOutside();
+    }
+
     public void OnTriggerEnter(Collider other)
     {
-        //StartCoroutine(CheckTimer());
-        
-        
         if (other.CompareTag("BurgerCustomer"))
         {
             orderTimeRemaining = 45f;
-            Debug.Log("burgerCustomer collided");
-            this.currentOrder = "burgerCustomer";
-            
-
-            Debug.Log("Finishedwaiting");
-            if (AIManager.customersSentOut == 0)
-            {
-                StartCoroutine(WaitTimer1());
-            }
-            else if (AIManager.customersSentOut == 2)
-            {
-                StartCoroutine(WaitTimer3());
-            }
-            else if (AIManager.customersSentOut == 4)
-            {
-                StartCoroutine(WaitTimer5());
-            }
+            currentOrder = "burgerCustomer";
+            ShowOrderUI();  // Show the order icon and timer for this customer.
+            Debug.Log("Burger customer collided with table.");
         }
 
         if (other.CompareTag("PlainBurgerCustomer"))
         {
             orderTimeRemaining = 45f;
-            Debug.Log("plain customer collided");
-            this.currentOrder = "plainBurgerCustomer";
-
-            if (AIManager.customersSentOut == 1)
-            {
-                StartCoroutine(WaitTimer2());
-            }
-            else if (AIManager.customersSentOut == 3)
-            {
-                StartCoroutine(WaitTimer4());
-            }
+            currentOrder = "plainBurgerCustomer";
+            ShowOrderUI();  // Show the order icon and timer for this customer.
+            Debug.Log("Plain burger customer collided with table.");
         }
     }
+    
+    public void ShowOrderUI()
+    {
+        // Activate the UI (order icon and timer)
+        tableUI.SetActive(true);
+        // Optionally set the correct order icon based on the currentOrder
+    }
+    
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag("Player"))
@@ -119,7 +109,7 @@ public class TableManager : MonoBehaviour
                 ordersCompleted++;
                 tableUI.SetActive(false);
                 DeactivateBurger();
-                SendOutside();
+                SendCustomerOutside();
                 Debug.Log("Burger customer satisfied");
             }
             else if (this.currentOrder == "plainBurgerCustomer" && PlateManager.hasMadePlainBurger)
@@ -129,7 +119,7 @@ public class TableManager : MonoBehaviour
                 ordersCompleted++;
                 tableUI.SetActive(false);
                 DeactivateBurger();
-                SendOutside();
+                SendCustomerOutside();
                 Debug.Log("Plain burger customer satisfied");
             }
             else
@@ -163,34 +153,28 @@ public class TableManager : MonoBehaviour
         
     }
     
-    public void SendOutside()
+    public void SendCustomerOutside()
     {
-        AIManager.customersSentOut = AIManager.customersSentOut + 1;
-        Debug.Log("sendoutside");
-
-        if (AIManager.customersSentOut == 1)
-        {
-            agent1.SetDestination(endTarget.transform.position);
-        }
-
-        if (AIManager.customersSentOut == 2)
-        {
-            agent2.SetDestination(endTarget.transform.position);
-        }
-
-        if (AIManager.customersSentOut == 3)
-        {
-            agent3.SetDestination(endTarget.transform.position);
-        }
-
-        if (AIManager.customersSentOut == 4)
-        {
-            agent4.SetDestination(endTarget.transform.position);
-        }
-
-        if (AIManager.customersSentOut == 5)
-        {
-            agent5.SetDestination(endTarget.transform.position);
+        AIManager.customersSentOut++;
+        Debug.Log("Sending customer outside");
+        
+        switch (AIManager.customersSentOut)  
+        {  
+            case 1:  
+                agent1.SetDestination(endTarget.position);  
+                break;  
+            case 2:  
+                agent2.SetDestination(endTarget.position);  
+                break;  
+            case 3:  
+                agent3.SetDestination(endTarget.position);  
+                break;  
+            case 4:  
+                agent4.SetDestination(endTarget.position);  
+                break;  
+            case 5:  
+                agent5.SetDestination(endTarget.position);  
+                break;  
         }
     }
     
@@ -203,53 +187,6 @@ public class TableManager : MonoBehaviour
     // {
     //     yield return new WaitForSeconds(5);
     // }
-
-    public IEnumerator WaitTimer1()
-    {
-        tableUI.SetActive(true);
-        yield return new WaitForSeconds(45);
-        tableUI.SetActive(false);
-        
-        orderCompleted = false;
-        SendOutside();
-    }
-    public IEnumerator WaitTimer2()
-    {
-        tableUI.SetActive(true);
-        yield return new WaitForSeconds(45);
-        tableUI.SetActive(false);
-        
-        orderCompleted = false;
-        SendOutside();
-    }
-    public IEnumerator WaitTimer3()
-    {
-        tableUI.SetActive(true);
-        yield return new WaitForSeconds(45);
-        tableUI.SetActive(false);
-        
-        orderCompleted = false;
-        SendOutside();
-    }
-    public IEnumerator WaitTimer4()
-    {
-        tableUI.SetActive(true);
-        yield return new WaitForSeconds(45);
-        tableUI.SetActive(false);
-        
-        orderCompleted = false;
-        SendOutside();
-    }
-    public IEnumerator WaitTimer5()
-    {
-        tableUI.SetActive(true);
-        yield return new WaitForSeconds(45);
-        tableUI.SetActive(false);
-        
-        orderCompleted = false;
-        SendOutside();
-    }
-    
 
     // OnTriggerEnter
     // {

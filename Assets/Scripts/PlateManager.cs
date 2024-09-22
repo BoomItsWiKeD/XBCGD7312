@@ -146,13 +146,20 @@ public class PlateManager : MonoBehaviour
 
     public void CheckBurger()
     {
-        if (bunBottom.activeSelf && patty.activeSelf && bunTop.activeSelf && !lettuce.activeSelf && !tomato.activeSelf) //Plain burger
+        // Check for required ingredients
+        bool hasBunBottom = bunBottom.activeSelf;
+        bool hasPatty = patty.activeSelf;
+        bool hasBunTop = bunTop.activeSelf;
+        bool hasLettuce = lettuce.activeSelf;
+        bool hasTomato = tomato.activeSelf;
+
+        if (hasBunBottom && hasPatty && hasBunTop && !hasLettuce && !hasTomato)
         {
             hasMadePlainBurger = true;
             hasMadeFilledBurger = false;
             hasMadeTrash = false;
         }
-        else if (bunBottom.activeSelf && patty.activeSelf && bunTop.activeSelf && lettuce.activeSelf && tomato.activeSelf) //Filled burger
+        else if (hasBunBottom && hasPatty && hasBunTop && hasLettuce && hasTomato)
         {
             hasMadeFilledBurger = true;
             hasMadePlainBurger = false;
