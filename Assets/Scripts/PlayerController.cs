@@ -5,72 +5,67 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private static float speed = 5f;
-    private Rigidbody rb;
-    private float moveHoriz;
-    private float moveVert;
-    public GameObject player;
+    public float moveSpeed = 20f; // Movement speed
+    public float jumpForce = 5f; // Jump force
+    public float gravity = -9.8f; // Gravity value
+    public CharacterController controller; // Reference to CharacterController component
 
-    private float rotTarget;
-    private float rotReference;
+    private Vector3 velocity; // Store current velocity
+    private bool isGrounded; // Check if player is grounded
 
     void Start()
     {
-        Time.timeScale = 1f;
-        rb = GetComponent<Rigidbody>();
-    }
-    
-    void FixedUpdate()
-    {
-        moveHoriz = Input.GetAxis("Horizontal");
-        moveVert = Input.GetAxis("Vertical");
-
-        Vector3 movement = new Vector3(moveHoriz, 0f, moveVert);
-        movement.Normalize();
         
-        rb.velocity = movement * speed;
-
-        if (moveHoriz == 0 && moveVert > 0) //W input
+        controller = GetComponent<CharacterController>();
+        if (controller == null)
         {
-            ChangeAngle(0);
+            Debug.LogError("CharacterController is missing from the GameObject!");
         }
-        if (moveHoriz < 0 && moveVert == 0) //A input
-        {
-            ChangeAngle(-90);
-        }
-        if (moveHoriz == 0 && moveVert < 0) //S input
-        {
-            ChangeAngle(180);
-        }
-        if (moveHoriz > 0 && moveVert == 0) //D input
-        {
-            ChangeAngle(90);
-        }
-
-        if (moveHoriz > 0 && moveVert > 0) //W and D input
-        {
-            ChangeAngle(45);
-        }
-        if (moveHoriz > 0 && moveVert < 0) //D and S input
-        {
-            ChangeAngle(135);
-        }
-        if (moveHoriz < 0 && moveVert < 0) //A and S input
-        {
-            ChangeAngle(-135);
-        }
-        if (moveHoriz < 0 && moveVert > 0) //W and A input
-        {
-            ChangeAngle(-45);
-        }
-        
-        //Handling Rotation:
-        float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, rotTarget, ref rotReference, 0.1f);
-        transform.rotation = Quaternion.Euler(0, angle,0);
     }
 
-    public void ChangeAngle(float targetAngle)
+    void Update()
     {
-        rotTarget = targetAngle;
+       
+        isGrounded = controller.isGrounded;
+
+        
+        if (isGrounded && velocity.y < 0)
+        {
+            velocity.y = 0f;
+        }
+
+        
+        float moveX = Input.GetAxis("Horizontal"); // A/D or Left/Right arrow
+        float moveZ = Input.GetAxis("Vertical");   // W/S or Up/Down arrow
+
+        
+        Vector3 move = new Vector3(moveX, 0, moveZ).normalized;
+
+        
+        if (move.magnitude > 0.1f) 
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(move);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+        }
+
+        
+        controller.Move(move * moveSpeed * Time.deltaTime);
+
+        
+        if (move.magnitude < 0.1f && isGrounded)
+        {
+            velocity.x = 0f;
+            velocity.z = 0f;
+        }
+
+        
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            velocity.y += Mathf.Sqrt(jumpForce * -2f * gravity);
+        }
+
+        
+        velocity.y += gravity * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
     }
 }

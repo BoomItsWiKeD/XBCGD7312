@@ -10,26 +10,10 @@ public class TableManager : MonoBehaviour
 {
     public string currentOrder;
     public float currentTime;
-    public GameObject customer1;
-    public GameObject customer2;
-    public GameObject customer3;
-    public GameObject customer4;
-    public GameObject customer5;
     public bool orderCompleted;
     public int ordersCompleted;
     public float orderTimeRemaining;
 
-    public NavMeshAgent agent1;
-    public NavMeshAgent agent2;
-    public NavMeshAgent agent3;
-    public NavMeshAgent agent4;
-    public NavMeshAgent agent5;
-    public Transform target1;
-    public Transform target2;
-    public Transform target3;
-    public Transform target4;
-    public Transform target5;
-    public Transform endTarget;
     public GameObject tableUI;
     public Slider timerSlider;
     
@@ -69,7 +53,6 @@ public class TableManager : MonoBehaviour
     private void CancelOrder()
     {
         tableUI.SetActive(false);
-        SendCustomerOutside();
     }
 
     public void OnTriggerEnter(Collider other)
@@ -109,7 +92,6 @@ public class TableManager : MonoBehaviour
                 ordersCompleted++;
                 tableUI.SetActive(false);
                 DeactivateBurger();
-                SendCustomerOutside();
                 Debug.Log("Burger customer satisfied");
             }
             else if (this.currentOrder == "plainBurgerCustomer" && PlateManager.hasMadePlainBurger)
@@ -119,7 +101,6 @@ public class TableManager : MonoBehaviour
                 ordersCompleted++;
                 tableUI.SetActive(false);
                 DeactivateBurger();
-                SendCustomerOutside();
                 Debug.Log("Plain burger customer satisfied");
             }
             else
@@ -153,30 +134,7 @@ public class TableManager : MonoBehaviour
         
     }
     
-    public void SendCustomerOutside()
-    {
-        AIManager.customersSentOut++;
-        Debug.Log("Sending customer outside");
-        
-        switch (AIManager.customersSentOut)  
-        {  
-            case 1:  
-                agent1.SetDestination(endTarget.position);  
-                break;  
-            case 2:  
-                agent2.SetDestination(endTarget.position);  
-                break;  
-            case 3:  
-                agent3.SetDestination(endTarget.position);  
-                break;  
-            case 4:  
-                agent4.SetDestination(endTarget.position);  
-                break;  
-            case 5:  
-                agent5.SetDestination(endTarget.position);  
-                break;  
-        }
-    }
+    
     
     // public void OnTriggerExit(Collider other)
     // {

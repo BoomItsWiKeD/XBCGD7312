@@ -1,101 +1,60 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class AIManager : MonoBehaviour
 {
-    public NavMeshAgent agent1;
-    public NavMeshAgent agent2;
-    public NavMeshAgent agent3;
-    public NavMeshAgent agent4;
-    public NavMeshAgent agent5;
-
-    public Transform target1; // Table 1
-    public Transform target2; // Table 2
-    public Transform target3; // Table 3
-    public Transform target4; // Table 4
-    public Transform target5; // Table 5
-    public Transform endTarget; // Exit after eating
+    public GameObject plainCustomerPrefab;
+    public GameObject fullCustomerPrefab;
+    public Transform customerSpawnPoint; // Will be set in the inspector
+    private GameObject[] plainCustomers; // Plain burger / Full burger customers
+    private GameObject[] fullCustomers;
 
     public int customersActivated;
     public static int customersSentOut;
     public float nextCustomerTimer = 30f;
     public float customerInterval = 5f; // Time between activating new customers
-
-    private bool agent1Active = false;
-    private bool agent2Active = false;
-    private bool agent3Active = false;
-    private bool agent4Active = false;
-    private bool agent5Active = false;
+    private float timeSinceLastSpawn;
 
     void Start()
     {
-        ActivateNextCustomer();
+        // Spawn the first customer when the scene starts
+        Instantiate(plainCustomerPrefab, customerSpawnPoint.position, plainCustomerPrefab.transform.rotation);
+        timeSinceLastSpawn = 0f; // Initialize the timer
     }
-    
+
     void Update()
     {
-        if (customersActivated < 5)
-        {
-            nextCustomerTimer -= Time.deltaTime;
+        timeSinceLastSpawn += Time.deltaTime; // Increment the timer each frame
 
-            if (nextCustomerTimer <= 0)
-            {
-                ActivateNextCustomer();
-                nextCustomerTimer = customerInterval; // Reset timer for next customer
-            }
+        // Check if it's time to spawn a new customer and if there are less than 5 customers in the scene
+        if (CustomersInScene() <= 5 && timeSinceLastSpawn >= customerInterval)
+        {
+            StartCoroutine(SpawnNewCustomer());
+            timeSinceLastSpawn = 0f; // Reset the spawn timer after spawning
         }
     }
 
-    public void ActivateNextCustomer()
+    IEnumerator SpawnNewCustomer()
     {
-        customersActivated++;
-        switch (customersActivated)
+        // Instantiate a new customer
+        int randomCustomer = Random.Range(0, 2);
+        switch (randomCustomer)
         {
-            case 1:
-                agent1.SetDestination(target1.position);
-                agent1Active = true;
-                break;
-            case 2:
-                agent2.SetDestination(target2.position);
-                agent2Active = true;
-                break;
-            case 3:
-                agent3.SetDestination(target3.position);
-                agent3Active = true;
-                break;
-            case 4:
-                agent4.SetDestination(target4.position);
-                agent4Active = true;
-                break;
-            case 5:
-                agent5.SetDestination(target5.position);
-                agent5Active = true;
-                break;
+            case 0: Instantiate(plainCustomerPrefab, customerSpawnPoint.position, plainCustomerPrefab.transform.rotation); break;
+            case 1: Instantiate(fullCustomerPrefab, customerSpawnPoint.position, fullCustomerPrefab.transform.rotation); break;
         }
+        yield return null; 
     }
-    
-    public void SendCustomerOutside()
+
+    public int CustomersInScene()
     {
-        customersSentOut++;
-        switch (customersSentOut)
-        {
-            case 1:
-                agent1.SetDestination(endTarget.position);
-                break;
-            case 2:
-                agent2.SetDestination(endTarget.position);
-                break;
-            case 3:
-                agent3.SetDestination(endTarget.position);
-                break;
-            case 4:
-                agent4.SetDestination(endTarget.position);
-                break;
-            case 5:
-                agent5.SetDestination(endTarget.position);
-                break;
-        }
+        fullCustomers = GameObject.FindGameObjectsWithTag("BurgerCustomer");
+        plainCustomers = GameObject.FindGameObjectsWithTag("PlainBurgerCustomer");
+        int totalCustomersInScene = fullCustomers.Length + plainCustomers.Length;
+        Debug.Log(totalCustomersInScene + " | TOTAL CUSTOMERS");
+        return totalCustomersInScene;
     }
 }
