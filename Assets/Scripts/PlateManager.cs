@@ -25,6 +25,7 @@ public class PlateManager : MonoBehaviour
     public GameObject lettuceImg;
     public GameObject tomatoImg;
     public GameObject pattyImg;
+    public GameObject plateImg;
 
     public  bool hasMadePlainBurger;
     public  bool hasMadeFilledBurger;
@@ -47,6 +48,7 @@ public class PlateManager : MonoBehaviour
             Debug.Log("Player picked up plate");
             platePickedUp = true;
             plate.SetActive(true);
+            plateImg.SetActive(true);
         }
 
         if (other.CompareTag("BunDispenser"))
@@ -101,7 +103,11 @@ public class PlateManager : MonoBehaviour
                     lettuce.SetActive(false);
                     patty.SetActive(false);
                     tomato.SetActive(false);
-                    plate.SetActive(false);
+                    bunBottomImg.SetActive(false);
+                    bunTopImg.SetActive(false);
+                    lettuceImg.SetActive(false);
+                    pattyImg.SetActive(false);
+                    tomatoImg.SetActive(false);
                 }
             }
         }
