@@ -34,6 +34,7 @@ public class OrderChecker : MonoBehaviour
         customerAtTable = false;
         setFullBurgerUI(false);
         setPlainBurgerUI(false);
+        timeSlider.value = orderTime;
     }
 
     void Update()
@@ -47,6 +48,11 @@ public class OrderChecker : MonoBehaviour
             if (currentCustomer != null)
             {
                 currentCustomer.orderCompleted = true;
+                if (currentCustomer.tag == "BurgerCustomer")
+                {
+                    setFullBurgerUI(false);
+                }
+                else setPlainBurgerUI(false);
                 ResetScript();
 
             }
@@ -114,8 +120,10 @@ public class OrderChecker : MonoBehaviour
         }
         if (other.CompareTag("BurgerCustomer") && other.CompareTag("Player"))
         {
+            Debug.Log("PlayerContact");
             if (playerCreatedOrder.hasMadeFilledBurger)
             {
+                Debug.Log("CorrectOrderFinished");
                 orderComplete = true;
                 setFullBurgerUI(false);
                 currentCustomer.orderCompleted = true;
@@ -125,11 +133,27 @@ public class OrderChecker : MonoBehaviour
         {
             if (playerCreatedOrder.hasMadePlainBurger)
             {
+                Debug.Log("CorrectOrderFinished");
                 orderComplete = true;
                 setPlainBurgerUI(false);
                 currentCustomer.orderCompleted = true;
             }
         }
         else customerAtTable = false;
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("BurgerCustomer"))
+        {
+            setFullBurgerUI(false);
+            customerAtTable = false;
+            currentCustomer = null;
+        }
+        if (other.CompareTag("PlainBurgerCustomer"))
+        {
+            setPlainBurgerUI(false);
+            customerAtTable = false;
+            currentCustomer = null;
+        }
     }
 }

@@ -20,13 +20,15 @@ public class CustomerAI : MonoBehaviour
     public bool customerReachedTable = false;
     public bool orderCompleted = false;
 
+    private PlateManager CreatedOrder;
+
     // Start is called before the first frame update
     void Start()
     {
         LeaveDestination = GameObject.FindGameObjectWithTag("LeaveTarget");
         customer = GetComponent<NavMeshAgent>();
         seatColliders = GameObject.FindGameObjectsWithTag("SeatTable");
-
+        CreatedOrder = GameObject.FindGameObjectWithTag("Player").GetComponent<PlateManager>();
         // Initialize the tableCheckers array to match the number of seatColliders
         tableCheckers = new TableChecker[seatColliders.Length];
 
@@ -53,13 +55,14 @@ public class CustomerAI : MonoBehaviour
         switch (randomCustomerOrder)
         {
             case 0:
-                transform.parent.tag = "BurgerCustomer";
-                this.gameObject.tag = "BurgerCustomer";
+                //transform.parent.tag = "BurgerCustomer";
+               // this.gameObject.tag = "BurgerCustomer";
                 break;
 
             case 1:
-                transform.parent.tag = "PlainBurgerCustomer";
-                this.gameObject.tag = "PlainBurgerCustomer"; break;
+                //transform.parent.tag = "PlainBurgerCustomer";
+                //this.gameObject.tag = "PlainBurgerCustomer";
+                break;
         }
     }
 
@@ -83,11 +86,7 @@ public class CustomerAI : MonoBehaviour
         else if (orderCompleted)
         {
             CustomerLeave();
-            if (customer.transform.position == LeaveDestination.transform.position)
-            {
-                Destroy(transform.parent.gameObject);
-                Destroy(gameObject);
-            }
+            
         }
     }
 
@@ -124,6 +123,26 @@ public class CustomerAI : MonoBehaviour
         if (other.CompareTag("SeatTable"))
         {
             customerReachedTable = true;
+        }
+        if(orderCompleted && other.CompareTag("LeaveTarget"))
+        {
+            Destroy(transform.parent.gameObject);
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Player"))
+        {
+            if(CreatedOrder.hasMadeFilledBurger && this.tag == "BurgerCustomer")
+            {
+                orderCompleted = true;
+            }
+            if(CreatedOrder.hasMadePlainBurger && this.tag == "PlainBurgerCustomer")
+            {
+                orderCompleted = true;  
+            }
         }
     }
 }

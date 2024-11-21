@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9066451023977000554}
   m_Layer: 0
   m_Name: PlainBurgerCustomer
-  m_TagString: PlainBurgerCustomer
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -215,6 +215,7 @@ MonoBehaviour:
   Mustache: {fileID: 3476596629704496327}
   hat: {fileID: 4957320213034888889}
   customerReachedTable: 0
+  orderCompleted: 0
 --- !u!1001 &4395007353067825558
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -18,6 +18,8 @@ public class AIManager : MonoBehaviour
     public float customerInterval = 5f; // Time between activating new customers
     private float timeSinceLastSpawn;
 
+    private float totalNumberOfCustomers = 0;
+
     void Start()
     {
         // Spawn the first customer when the scene starts
@@ -28,11 +30,14 @@ public class AIManager : MonoBehaviour
     void Update()
     {
         timeSinceLastSpawn += Time.deltaTime; // Increment the timer each frame
-
+        Debug.Log(totalNumberOfCustomers + "| Total number of customers Spawned");
         // Check if it's time to spawn a new customer and if there are less than 5 customers in the scene
-        if (CustomersInScene() <= 5 && timeSinceLastSpawn >= customerInterval)
+        if (CustomersInScene() < 4 && timeSinceLastSpawn >= customerInterval)
         {
-            StartCoroutine(SpawnNewCustomer());
+            if (totalNumberOfCustomers < 10)
+            {
+                StartCoroutine(SpawnNewCustomer());
+            }
             timeSinceLastSpawn = 0f; // Reset the spawn timer after spawning
         }
     }
@@ -40,6 +45,7 @@ public class AIManager : MonoBehaviour
     IEnumerator SpawnNewCustomer()
     {
         // Instantiate a new customer
+        totalNumberOfCustomers++;
         int randomCustomer = Random.Range(0, 2);
         switch (randomCustomer)
         {
@@ -51,9 +57,10 @@ public class AIManager : MonoBehaviour
 
     public int CustomersInScene()
     {
+        int totalCustomersInScene = 0;
         fullCustomers = GameObject.FindGameObjectsWithTag("BurgerCustomer");
         plainCustomers = GameObject.FindGameObjectsWithTag("PlainBurgerCustomer");
-        int totalCustomersInScene = fullCustomers.Length + plainCustomers.Length;
+        totalCustomersInScene = fullCustomers.Length + plainCustomers.Length;
         Debug.Log(totalCustomersInScene + " | TOTAL CUSTOMERS");
         return totalCustomersInScene;
     }
