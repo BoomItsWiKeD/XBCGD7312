@@ -26,9 +26,9 @@ public class PlateManager : MonoBehaviour
     public GameObject tomatoImg;
     public GameObject pattyImg;
 
-    public bool hasMadePlainBurger;
-    public  bool hasMadeFilledBurger;
-    public  bool hasMadeTrash;
+    public static bool hasMadePlainBurger;
+    public static bool hasMadeFilledBurger;
+    public static bool hasMadeTrash;
 
     private void Start()
     {

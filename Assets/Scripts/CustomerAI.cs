@@ -18,7 +18,6 @@ public class CustomerAI : MonoBehaviour
     public GameObject Mustache;
     public GameObject hat;
     public bool customerReachedTable = false;
-    public bool orderCompleted = false;
 
     // Start is called before the first frame update
     void Start()
@@ -66,28 +65,16 @@ public class CustomerAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!orderCompleted)
-        {
-            SelectANewOpenTable();
-            seatColliders = GameObject.FindGameObjectsWithTag("SeatTable");
-            tableCheckers = new TableChecker[seatColliders.Length];
+        SelectANewOpenTable();
+        seatColliders = GameObject.FindGameObjectsWithTag("SeatTable");
+        tableCheckers = new TableChecker[seatColliders.Length];
 
-            // Assign TableChecker components from each seatCollider
-            int index = 0;
-            foreach (GameObject seat in seatColliders)
-            {
-                tableCheckers[index] = seat.GetComponent<TableChecker>();
-                index++;
-            }
-        }
-        else if (orderCompleted)
+        // Assign TableChecker components from each seatCollider
+        int index = 0;
+        foreach (GameObject seat in seatColliders)
         {
-            CustomerLeave();
-            if(customer.transform.position == LeaveDestination.transform.position)
-            {
-                Destroy(transform.parent.gameObject);
-                Destroy(gameObject);
-            }
+            tableCheckers[index] = seat.GetComponent<TableChecker>();
+            index++;
         }
     }
 
