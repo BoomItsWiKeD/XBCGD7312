@@ -4,10 +4,13 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class CustomerAI : MonoBehaviour
 {
-
+    public string sceneName;
+    public GameObject endScreen;
+    
     private NavMeshAgent customer;
     public Transform customerDestination;
     public GameObject LeaveDestination;
@@ -36,13 +39,13 @@ public class CustomerAI : MonoBehaviour
     public GameObject patty;
     public GameObject pattyUI;
 
-    public float timeRemaining;
-    public bool timerStarted = false;
-    
 
     // Start is called before the first frame update
     void Start()
     {
+        Scene currentScene = SceneManager.GetActiveScene();
+        sceneName = currentScene.name;
+        
         plate = GameObject.Find("Player/Plate");
         plateUI = GameObject.Find("Canvas/Inventory/PlateUI");
         topBun = GameObject.Find("Player/Burger/BunTop");
@@ -100,10 +103,6 @@ public class CustomerAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (timerStarted)
-        {
-            timeRemaining -= Time.deltaTime;
-        }
         if (!orderCompleted)
         {
             SelectANewOpenTable();
@@ -158,15 +157,14 @@ public class CustomerAI : MonoBehaviour
         if (other.CompareTag("SeatTable"))
         {
             customerReachedTable = true;
-            if (timerStarted == false)
-            {
-                timeRemaining = 45;
-                timerStarted = true;
-            }
-            
+
         }
         if(orderCompleted && other.CompareTag("LeaveTarget"))
         {
+            if (sceneName == "TutorialLevel")
+            {
+                endScreen.SetActive(true);
+            }
             Destroy(transform.parent.gameObject);
             Destroy(gameObject);
         }
@@ -179,16 +177,12 @@ public class CustomerAI : MonoBehaviour
             if(CreatedOrder.hasMadeFilledBurger && this.tag == "BurgerCustomer")
             {
                 orderCompleted = true;
-                timerStarted = false;
-                ScoreManager.score += (timeRemaining / 45 )* 100;
-                Debug.Log(ScoreManager.score);
                 DeactivateBurger();
                 
             }
             if(CreatedOrder.hasMadePlainBurger && this.tag == "PlainBurgerCustomer")
             {
                 orderCompleted = true;
-                timerStarted = false;
                 DeactivateBurger();
             }
         }

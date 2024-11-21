@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class AIManager : MonoBehaviour
 {
+    public GameObject endScreen;
+    public string sceneName;
+    
     public GameObject plainCustomerPrefab;
     public GameObject fullCustomerPrefab;
     public Transform customerSpawnPoint; // Will be set in the inspector
@@ -18,10 +22,12 @@ public class AIManager : MonoBehaviour
     public float customerInterval = 5f; // Time between activating new customers
     private float timeSinceLastSpawn;
 
-    private float totalNumberOfCustomers = 0;
+    private float totalNumberOfCustomers = 1;
 
     void Start()
     {
+        Scene currentScene = SceneManager.GetActiveScene();
+        sceneName = currentScene.name;
         // Spawn the first customer when the scene starts
         Instantiate(plainCustomerPrefab, customerSpawnPoint.position, plainCustomerPrefab.transform.rotation);
         timeSinceLastSpawn = 0f; // Initialize the timer
@@ -39,6 +45,15 @@ public class AIManager : MonoBehaviour
                 StartCoroutine(SpawnNewCustomer());
             }
             timeSinceLastSpawn = 0f; // Reset the spawn timer after spawning
+        }
+
+        if (CustomersInScene() == 0 && totalNumberOfCustomers == 10)
+        {
+            endScreen.SetActive(true);
+        }
+        if (CustomersInScene() == 0 && sceneName == "TutorialLevel")
+        {
+            endScreen.SetActive(true);
         }
     }
 
