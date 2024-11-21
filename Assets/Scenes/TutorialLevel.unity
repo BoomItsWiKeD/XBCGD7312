@@ -568,9 +568,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ac9e25d56eb68b468563d650ee7284a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plate: {fileID: 1948497496}
   playerRB: {fileID: 290292744}
   table: {fileID: 0}
+  plate: {fileID: 1948497496}
   bunBottom: {fileID: 1273072131}
   bunTop: {fileID: 1273072130}
   lettuce: {fileID: 1273072129}
@@ -1468,6 +1468,54 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7321678559267929367, guid: 56d718642e8146b4c9a1d24c4e3f91f7, type: 3}
+      propertyPath: patty
+      value: 
+      objectReference: {fileID: 1273072128}
+    - target: {fileID: 7321678559267929367, guid: 56d718642e8146b4c9a1d24c4e3f91f7, type: 3}
+      propertyPath: plate
+      value: 
+      objectReference: {fileID: 1948497496}
+    - target: {fileID: 7321678559267929367, guid: 56d718642e8146b4c9a1d24c4e3f91f7, type: 3}
+      propertyPath: bunTop
+      value: 
+      objectReference: {fileID: 1273072130}
+    - target: {fileID: 7321678559267929367, guid: 56d718642e8146b4c9a1d24c4e3f91f7, type: 3}
+      propertyPath: tomato
+      value: 
+      objectReference: {fileID: 1273072126}
+    - target: {fileID: 7321678559267929367, guid: 56d718642e8146b4c9a1d24c4e3f91f7, type: 3}
+      propertyPath: lettuce
+      value: 
+      objectReference: {fileID: 1273072129}
+    - target: {fileID: 7321678559267929367, guid: 56d718642e8146b4c9a1d24c4e3f91f7, type: 3}
+      propertyPath: pattyImg
+      value: 
+      objectReference: {fileID: 1955304716}
+    - target: {fileID: 7321678559267929367, guid: 56d718642e8146b4c9a1d24c4e3f91f7, type: 3}
+      propertyPath: plateImg
+      value: 
+      objectReference: {fileID: 701306018}
+    - target: {fileID: 7321678559267929367, guid: 56d718642e8146b4c9a1d24c4e3f91f7, type: 3}
+      propertyPath: bunBottom
+      value: 
+      objectReference: {fileID: 1273072131}
+    - target: {fileID: 7321678559267929367, guid: 56d718642e8146b4c9a1d24c4e3f91f7, type: 3}
+      propertyPath: bunTopImg
+      value: 
+      objectReference: {fileID: 608621103}
+    - target: {fileID: 7321678559267929367, guid: 56d718642e8146b4c9a1d24c4e3f91f7, type: 3}
+      propertyPath: tomatoImg
+      value: 
+      objectReference: {fileID: 558313573}
+    - target: {fileID: 7321678559267929367, guid: 56d718642e8146b4c9a1d24c4e3f91f7, type: 3}
+      propertyPath: lettuceImg
+      value: 
+      objectReference: {fileID: 1914210351}
+    - target: {fileID: 7321678559267929367, guid: 56d718642e8146b4c9a1d24c4e3f91f7, type: 3}
+      propertyPath: bunBottomImg
+      value: 
+      objectReference: {fileID: 1616772073}
     - target: {fileID: 7345706740381243629, guid: 56d718642e8146b4c9a1d24c4e3f91f7, type: 3}
       propertyPath: m_Name
       value: BurgerCustomer
@@ -3553,6 +3601,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9097985048744492599, guid: 19204ed99359015499784e1529719472, type: 3}
+      propertyPath: m_MaxValue
+      value: 45
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3722,13 +3774,57 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1798377096939335697, guid: e116c05bc4d9bc34aa23e5027c2b03ff, type: 3}
+      propertyPath: patty
+      value: 
+      objectReference: {fileID: 1273072128}
+    - target: {fileID: 1798377096939335697, guid: e116c05bc4d9bc34aa23e5027c2b03ff, type: 3}
+      propertyPath: plate
+      value: 
+      objectReference: {fileID: 1948497496}
+    - target: {fileID: 1798377096939335697, guid: e116c05bc4d9bc34aa23e5027c2b03ff, type: 3}
+      propertyPath: bunTop
+      value: 
+      objectReference: {fileID: 1273072130}
+    - target: {fileID: 1798377096939335697, guid: e116c05bc4d9bc34aa23e5027c2b03ff, type: 3}
+      propertyPath: tomato
+      value: 
+      objectReference: {fileID: 1273072126}
+    - target: {fileID: 1798377096939335697, guid: e116c05bc4d9bc34aa23e5027c2b03ff, type: 3}
+      propertyPath: lettuce
+      value: 
+      objectReference: {fileID: 1273072129}
+    - target: {fileID: 1798377096939335697, guid: e116c05bc4d9bc34aa23e5027c2b03ff, type: 3}
       propertyPath: tableUI
       value: 
       objectReference: {fileID: 2118795677}
     - target: {fileID: 1798377096939335697, guid: e116c05bc4d9bc34aa23e5027c2b03ff, type: 3}
+      propertyPath: pattyImg
+      value: 
+      objectReference: {fileID: 1955304716}
+    - target: {fileID: 1798377096939335697, guid: e116c05bc4d9bc34aa23e5027c2b03ff, type: 3}
+      propertyPath: plateImg
+      value: 
+      objectReference: {fileID: 701306018}
+    - target: {fileID: 1798377096939335697, guid: e116c05bc4d9bc34aa23e5027c2b03ff, type: 3}
+      propertyPath: bunBottom
+      value: 
+      objectReference: {fileID: 1273072131}
+    - target: {fileID: 1798377096939335697, guid: e116c05bc4d9bc34aa23e5027c2b03ff, type: 3}
+      propertyPath: bunTopImg
+      value: 
+      objectReference: {fileID: 608621103}
+    - target: {fileID: 1798377096939335697, guid: e116c05bc4d9bc34aa23e5027c2b03ff, type: 3}
+      propertyPath: tomatoImg
+      value: 
+      objectReference: {fileID: 558313573}
+    - target: {fileID: 1798377096939335697, guid: e116c05bc4d9bc34aa23e5027c2b03ff, type: 3}
       propertyPath: fullBurger
       value: 
       objectReference: {fileID: 393011824}
+    - target: {fileID: 1798377096939335697, guid: e116c05bc4d9bc34aa23e5027c2b03ff, type: 3}
+      propertyPath: lettuceImg
+      value: 
+      objectReference: {fileID: 1914210351}
     - target: {fileID: 1798377096939335697, guid: e116c05bc4d9bc34aa23e5027c2b03ff, type: 3}
       propertyPath: timeSlider
       value: 
@@ -3737,9 +3833,25 @@ PrefabInstance:
       propertyPath: plainBurger
       value: 
       objectReference: {fileID: 1409460265}
+    - target: {fileID: 1798377096939335697, guid: e116c05bc4d9bc34aa23e5027c2b03ff, type: 3}
+      propertyPath: bunBottomImg
+      value: 
+      objectReference: {fileID: 1616772073}
     - target: {fileID: 6837629533912881816, guid: e116c05bc4d9bc34aa23e5027c2b03ff, type: 3}
       propertyPath: m_Name
       value: TableWorking
+      objectReference: {fileID: 0}
+    - target: {fileID: 8089841928520585968, guid: e116c05bc4d9bc34aa23e5027c2b03ff, type: 3}
+      propertyPath: m_Size.x
+      value: 0.08914976
+      objectReference: {fileID: 0}
+    - target: {fileID: 8089841928520585968, guid: e116c05bc4d9bc34aa23e5027c2b03ff, type: 3}
+      propertyPath: m_Center.x
+      value: -0.19291031
+      objectReference: {fileID: 0}
+    - target: {fileID: 8089841928520585968, guid: e116c05bc4d9bc34aa23e5027c2b03ff, type: 3}
+      propertyPath: m_Center.y
+      value: 1.2973621
       objectReference: {fileID: 0}
     - target: {fileID: 8089841928520585968, guid: e116c05bc4d9bc34aa23e5027c2b03ff, type: 3}
       propertyPath: m_IsTrigger

@@ -10,10 +10,10 @@ public class PlateManager : MonoBehaviour
 {
     private bool platePickedUp;
     
-    public GameObject plate;
     public Rigidbody playerRB;
     public GameObject table;
-
+    
+    public GameObject plate;
     public GameObject bunBottom;
     public GameObject bunTop;
     public GameObject lettuce;

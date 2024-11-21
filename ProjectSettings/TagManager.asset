@@ -17,6 +17,7 @@ TagManager:
   - PattyDispenser
   - SeatTable
   - LeaveTarget
+  - DeactivateBurger
   layers:
   - Default
   - TransparentFX

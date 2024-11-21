@@ -189,6 +189,18 @@ MonoBehaviour:
   hat: {fileID: 8109680724005856279}
   customerReachedTable: 0
   orderCompleted: 0
+  plate: {fileID: 0}
+  bunBottom: {fileID: 0}
+  bunTop: {fileID: 0}
+  lettuce: {fileID: 0}
+  patty: {fileID: 0}
+  tomato: {fileID: 0}
+  bunBottomImg: {fileID: 0}
+  bunTopImg: {fileID: 0}
+  lettuceImg: {fileID: 0}
+  tomatoImg: {fileID: 0}
+  pattyImg: {fileID: 0}
+  plateImg: {fileID: 0}
 --- !u!54 &7864142749801490301
 Rigidbody:
   m_ObjectHideFlags: 0

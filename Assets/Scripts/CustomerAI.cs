@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -22,9 +23,39 @@ public class CustomerAI : MonoBehaviour
 
     private PlateManager CreatedOrder;
 
+    public GameObject plate;
+    public GameObject plateUI;
+    public GameObject topBun;
+    public GameObject topBunUI;
+    public GameObject bottomBun;
+    public GameObject bottomBunUI;
+    public GameObject tomato;
+    public GameObject tomatoUI;
+    public GameObject lettuce;
+    public GameObject lettuceUI;
+    public GameObject patty;
+    public GameObject pattyUI;
+
+    public float timeRemaining;
+    public bool timerStarted = false;
+    
+
     // Start is called before the first frame update
     void Start()
     {
+        plate = GameObject.Find("Player/Plate");
+        plateUI = GameObject.Find("Canvas/Inventory/PlateUI");
+        topBun = GameObject.Find("Player/Burger/BunTop");
+        topBunUI = GameObject.Find("Canvas/Inventory/TopBunUI");
+        bottomBun = GameObject.Find("Player/Burger/BunBottom"); 
+        bottomBunUI = GameObject.Find("Canvas/Inventory/BottomBunUI");
+        tomato = GameObject.Find("Player/Burger/Tomato");
+        tomatoUI = GameObject.Find("Canvas/Inventory/TomatoUI");
+        lettuce = GameObject.Find("Player/Burger/Lettuce");
+        lettuceUI = GameObject.Find("Canvas/Inventory/LettuceUI");
+        patty = GameObject.Find("Player/Burger/Patty");
+        pattyUI = GameObject.Find("Canvas/Inventory/PattyUI");
+        
         LeaveDestination = GameObject.FindGameObjectWithTag("LeaveTarget");
         customer = GetComponent<NavMeshAgent>();
         seatColliders = GameObject.FindGameObjectsWithTag("SeatTable");
@@ -69,6 +100,10 @@ public class CustomerAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (timerStarted)
+        {
+            timeRemaining -= Time.deltaTime;
+        }
         if (!orderCompleted)
         {
             SelectANewOpenTable();
@@ -123,6 +158,12 @@ public class CustomerAI : MonoBehaviour
         if (other.CompareTag("SeatTable"))
         {
             customerReachedTable = true;
+            if (timerStarted == false)
+            {
+                timeRemaining = 45;
+                timerStarted = true;
+            }
+            
         }
         if(orderCompleted && other.CompareTag("LeaveTarget"))
         {
@@ -138,11 +179,33 @@ public class CustomerAI : MonoBehaviour
             if(CreatedOrder.hasMadeFilledBurger && this.tag == "BurgerCustomer")
             {
                 orderCompleted = true;
+                timerStarted = false;
+                ScoreManager.score += (timeRemaining / 45 )* 100;
+                Debug.Log(ScoreManager.score);
+                DeactivateBurger();
+                
             }
             if(CreatedOrder.hasMadePlainBurger && this.tag == "PlainBurgerCustomer")
             {
-                orderCompleted = true;  
+                orderCompleted = true;
+                timerStarted = false;
+                DeactivateBurger();
             }
         }
+    }
+    public void DeactivateBurger()
+    {
+        plate.SetActive(false);
+        bottomBun.SetActive(false);
+        topBun.SetActive(false);
+        tomato.SetActive(false);
+        lettuce.SetActive(false);
+        patty.SetActive(false);
+        plateUI.SetActive(false);
+        bottomBunUI.SetActive(false);
+        topBunUI.SetActive(false);
+        tomatoUI.SetActive(false);
+        lettuceUI.SetActive(false);
+        pattyUI.SetActive(false);
     }
 }

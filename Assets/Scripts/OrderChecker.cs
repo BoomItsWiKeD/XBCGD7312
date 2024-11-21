@@ -23,6 +23,8 @@ public class OrderChecker : MonoBehaviour
 
     [Header("The Current customer at the table")]
     public CustomerAI currentCustomer;
+    
+    
 
 
     void Start()
@@ -34,7 +36,8 @@ public class OrderChecker : MonoBehaviour
         customerAtTable = false;
         setFullBurgerUI(false);
         setPlainBurgerUI(false);
-        timeSlider.value = orderTime;
+        timeSlider.value = orderTimer;
+        orderTimer = orderTime;
     }
 
     void Update()
@@ -54,8 +57,13 @@ public class OrderChecker : MonoBehaviour
                 }
                 else setPlainBurgerUI(false);
                 ResetScript();
-
             }
+        }
+
+        if (currentCustomer == null)
+        {
+            setFullBurgerUI(false);
+            setPlainBurgerUI(false);
         }
     }
     private void ResetScript()
@@ -156,4 +164,5 @@ public class OrderChecker : MonoBehaviour
             currentCustomer = null;
         }
     }
+    
 }
